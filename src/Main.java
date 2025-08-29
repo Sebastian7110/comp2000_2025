@@ -5,29 +5,31 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Main extends JFrame {
+  private Grid grid;
     public static void main(String[] args) throws Exception {
       Main window = new Main();
       window.run();
     }
 
-    class Canvas extends JPanel {
-      public Canvas() {
-        setPreferredSize(new Dimension(720, 720));
-      }
-
-      @Override
-      public void paint(Graphics g) {
-	g.setColor(java.awt.Color.BLACK);
-	g.drawRect(10, 10, 700, 700);
-      }
-    }
-
     private Main() {
       this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      Canvas canvas = new Canvas();
-      this.setContentPane(canvas);
-      this.pack();
-      this.setVisible(true);
+      grid = new Grid(20, 20, 35);
+      JPanel panel = new JPanel() {
+            @Override
+            public void paint(Graphics g) {
+                super.paint(g);
+                grid.paint(g);
+            }
+
+            @Override
+            public Dimension getPreferredSize() {
+                return new Dimension(720, 720);
+            }
+        };
+
+        this.setContentPane(panel);
+        this.pack();
+        this.setVisible(true);
     }
 
     public void run() {
